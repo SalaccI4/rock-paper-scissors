@@ -1,4 +1,5 @@
 let randNum = Math.floor(Math.random() * 3) 
+let humanInput
 
 function getComputerChoice(){ 
     if (randNum == 0){
@@ -8,4 +9,9 @@ function getComputerChoice(){
         return "paper" 
     }
     return "scissor" 
+}
+
+function getHumanChoice(){
+    humanInput = prompt("Choose: rock, paper, or scissor")
+    return humanInput
 }
