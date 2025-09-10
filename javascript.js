@@ -1,9 +1,8 @@
-let randNum = Math.floor(Math.random() * 3) 
+let randNum
 let humanInput
 let humanScore = 0
 let computerScore = 0
-const humanSelection = getHumanChoice()
-const computerSelection = getComputerChoice()
+
 
 function getComputerChoice(){ 
     if (randNum == 0){
@@ -50,3 +49,26 @@ function playRound(humanChoice, computerChoice){
     }
     return "error"
 }
+
+function playGame(){
+    for (i=0; i<5; i++){
+        randNum = Math.floor(Math.random() * 3)
+        const humanSelection = getHumanChoice()
+        const computerSelection = getComputerChoice() 
+        console.log(playRound(humanSelection, computerSelection))
+    }
+    console.log(determineWinner())
+}
+
+function determineWinner(human, computer){
+    if (humanScore > computerScore){
+        return "Player Wins! (" + humanScore + " : " + computerScore + ")"
+    }
+    else if (computerScore > humanScore){
+        return "Computer Wins! (" + computerScore + " : " + humanScore + ")"
+    }
+    return "Draw! (" + computerScore + " : " + humanScore + ")"
+}
+
+
+playGame()
