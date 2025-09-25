@@ -5,6 +5,7 @@ let computerScore = 0
 
 
 function getComputerChoice(){ 
+    randNum = Math.floor(Math.random() * 3)
     if (randNum == 0){
         return "rock" 
     } 
@@ -14,10 +15,18 @@ function getComputerChoice(){
     return "scissor" 
 }
 
-function getHumanChoice(){
-    humanInput = prompt("Choose: rock, paper, or scissor")
-    return humanInput.toLowerCase()
-}
+let humanChoice = document.querySelectorAll("button")
+let scoreboard = document.querySelector("div")
+
+humanChoice.forEach(btn => {
+    btn.style.fontSize = "80px"
+    btn.style.border = "10px, solid, gray"
+    btn.style.color = "black"})
+
+    scoreboard.style.fontSize = "80px"  
+
+
+
 
 function playRound(humanChoice, computerChoice){
     if (humanChoice == computerChoice){
@@ -51,24 +60,49 @@ function playRound(humanChoice, computerChoice){
 }
 
 function playGame(){
-    for (i=0; i<5; i++){
-        randNum = Math.floor(Math.random() * 3)
-        const humanSelection = getHumanChoice()
-        const computerSelection = getComputerChoice() 
-        console.log(playRound(humanSelection, computerSelection))
-    }
-    console.log(determineWinner())
+    const humanSelection = getHumanChoice()
+    const computerSelection = getComputerChoice() 
+    console.log(playRound(humanSelection, computerSelection))
+    
+    console.log(determineRoundWinner())
 }
 
-function determineWinner(human, computer){
-    if (humanScore > computerScore){
-        return "Player Wins! (" + humanScore + " : " + computerScore + ")"
+function determineRoundWinner(human, computer){
+    if (human > computer){
+        return "Player Wins! (" + human + " : " + computer + ")"
     }
-    else if (computerScore > humanScore){
-        return "Computer Wins! (" + computerScore + " : " + humanScore + ")"
+    else if (computer > human){
+        return "Computer Wins! (" + human + " : " + computer + ")"
     }
-    return "Draw! (" + computerScore + " : " + humanScore + ")"
+    return "Draw! (" + human + " : " + computer + ")"
 }
 
+function determineGameWinner(humanPoints, computerPoints){
+    if (humanPoints == 5){
+        humanScore = 0
+        computerScore = 0
+        return "This game's winner is Human!"
+    }
+    else if (computerPoints == 5) {
+        humanScore = 0
+        computerScore = 0
+        return "This game's winner is Computer!"
+    }
+}
 
-playGame()
+humanChoice.forEach(btn => {
+    btn.addEventListener("click", () => {
+        humanInput = btn.textContent.toLowerCase()
+
+        const computerInput = getComputerChoice()
+        console.log(playRound(humanInput, computerInput))
+
+        console.log(determineRoundWinner(humanScore, computerScore))
+        //If statement prevents undefined from printing every turn
+        if (humanScore == 5 || computerScore == 5){
+            console.log(determineGameWinner(humanScore, computerScore))
+        }
+        
+        scoreboard.textContent = `Score: ${humanScore} - ${computerScore}`
+    })
+})
